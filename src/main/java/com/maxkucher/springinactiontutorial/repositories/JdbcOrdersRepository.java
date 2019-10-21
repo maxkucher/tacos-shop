@@ -1,23 +1,22 @@
 package com.maxkucher.springinactiontutorial.repositories;
 
-import com.maxkucher.springinactiontutorial.domains.Taco;
+import com.maxkucher.springinactiontutorial.domains.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class JdbcTacoRepository implements TacoRepository {
-
+public class JdbcOrdersRepository implements OrdersRepository {
     private final JdbcTemplate jdbc;
 
+
     @Autowired
-    public JdbcTacoRepository(JdbcTemplate jdbc) {
+    public JdbcOrdersRepository(JdbcTemplate jdbc) {
         this.jdbc = jdbc;
     }
 
-
     @Override
-    public Taco save(Taco design) {
+    public Order save(Order order) {
         return null;
     }
 }
