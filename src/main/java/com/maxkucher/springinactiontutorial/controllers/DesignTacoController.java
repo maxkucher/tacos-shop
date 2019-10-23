@@ -8,6 +8,7 @@ import com.maxkucher.springinactiontutorial.repositories.IngredientRepository;
 import com.maxkucher.springinactiontutorial.repositories.TacoRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -20,6 +21,7 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Controller
+@ConditionalOnExpression("false")
 @RequestMapping("/design")
 @SessionAttributes("order")
 public class DesignTacoController {
