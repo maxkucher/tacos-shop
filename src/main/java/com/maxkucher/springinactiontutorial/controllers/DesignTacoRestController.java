@@ -5,6 +5,8 @@ import com.maxkucher.springinactiontutorial.repositories.TacoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -29,12 +31,11 @@ public class DesignTacoRestController {
     }
 
     @GetMapping("/{id}")
-    public Taco tacoById(@PathVariable Long id) {
+    public ResponseEntity<Taco> tacoById(@PathVariable Long id) {
         Optional<Taco> optionalTaco = tacoRepo.findById(id);
-        return optionalTaco.orElse(null);
+        return optionalTaco.map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
-
-
 
 
 }
