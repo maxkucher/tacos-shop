@@ -21,7 +21,6 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Controller
-@ConditionalOnExpression("false")
 @RequestMapping("/design")
 @SessionAttributes("order")
 public class DesignTacoController {
