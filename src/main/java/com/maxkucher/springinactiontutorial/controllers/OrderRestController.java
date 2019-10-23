@@ -22,5 +22,14 @@ public class OrderRestController {
                 .save(order);
     }
 
+    @PutMapping
+    public Order putOrder(@RequestBody Order order){
+        return ordersRepository.save(order);
+    }
+
+
+
+
+
 
 }
