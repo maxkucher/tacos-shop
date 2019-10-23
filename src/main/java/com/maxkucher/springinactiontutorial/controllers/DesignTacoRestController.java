@@ -5,6 +5,7 @@ import com.maxkucher.springinactiontutorial.repositories.TacoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
@@ -35,6 +36,13 @@ public class DesignTacoRestController {
         Optional<Taco> optionalTaco = tacoRepo.findById(id);
         return optionalTaco.map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
+    }
+
+
+    @PostMapping(consumes = "application/json")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Taco postTaco(@RequestBody Taco taco) {
+        return tacoRepo.save(taco);
     }
 
 
