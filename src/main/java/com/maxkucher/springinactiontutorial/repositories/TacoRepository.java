@@ -1,8 +1,7 @@
 package com.maxkucher.springinactiontutorial.repositories;
 
 import com.maxkucher.springinactiontutorial.domains.Taco;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 
-public interface TacoRepository extends CrudRepository<Taco, Long> {
-
+public interface TacoRepository extends PagingAndSortingRepository<Taco, Long> {
 }
