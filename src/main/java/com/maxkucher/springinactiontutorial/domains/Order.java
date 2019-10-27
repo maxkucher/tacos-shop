@@ -1,9 +1,12 @@
 package com.maxkucher.springinactiontutorial.domains;
 
+import com.datastax.driver.core.utils.UUIDs;
 import lombok.Data;
 import org.hibernate.validator.constraints.CreditCardNumber;
+import org.springframework.data.cassandra.core.mapping.Column;
+import org.springframework.data.cassandra.core.mapping.PrimaryKey;
+import org.springframework.data.cassandra.core.mapping.Table;
 
-import javax.persistence.*;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
@@ -11,17 +14,17 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Data
-@Entity
-@Table(name = "Taco_Order")
+@Table("tacoorders")
 public class Order implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-    private Date placedAt;
+    @PrimaryKey
+    private UUID id = UUIDs.timeBased();
+
+    private Date placedAt = new Date();
 
     @NotBlank(message = "Name is required")
     private String name;
@@ -42,19 +45,15 @@ public class Order implements Serializable {
     private String ccCVV;
 
 
+    @Column("user")
+    private List<UserUDT> user;
 
-    @ManyToMany(targetEntity = Taco.class)
-    private List<Taco> tacos = new ArrayList<>();
+    @Column("tacos")
+    private List<TacoUDT> tacos = new ArrayList<>();
 
-    public void addDesign(Taco saved) {
+    public void addDesign(TacoUDT saved) {
         tacos.add(saved);
     }
 
-
-    @PrePersist
-    void placeAt()
-    {
-        this.placedAt = new Date();
-    }
 
 }

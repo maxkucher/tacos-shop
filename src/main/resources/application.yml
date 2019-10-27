@@ -1,4 +1,10 @@
 spring:
+  data:
+    cassandra:
+      keyspace-name: tacocloud
+      schema-action: recreate-drop-unused
+      contact-points:
+      - 192.168.99.100
   thymeleaf:
     cache: false
 
