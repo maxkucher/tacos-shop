@@ -1,9 +1,11 @@
 package com.maxkucher.springinactiontutorial.repositories;
 
 import com.maxkucher.springinactiontutorial.domains.Ingredient;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.reactive.ReactiveCrudRepository;
 
-public interface IngredientRepository extends CrudRepository<Ingredient, String> {
+import java.util.UUID;
+
+public interface IngredientRepository extends ReactiveCrudRepository<Ingredient, UUID> {
 
 
 }

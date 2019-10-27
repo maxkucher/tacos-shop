@@ -8,23 +8,22 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.UUID;
+
 @Service
 @RequiredArgsConstructor
 public class TacoService {
     private final TacoRepository repository;
 
-    public Flux<Taco> findAll()
-    {
+    public Flux<Taco> findAll() {
         return repository.findAll();
     }
 
-    public Mono<Taco> findTacoById(Mono<Long> id)
-    {
+    public Mono<Taco> findTacoById(Mono<UUID> id) {
         return repository.findById(id);
     }
 
-    public Mono<Taco> saveTaco(Mono<Taco> taco)
-    {
+    public Mono<Taco> saveTaco(Taco taco) {
         return repository.save(taco);
     }
 
