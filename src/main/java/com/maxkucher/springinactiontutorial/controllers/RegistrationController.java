@@ -5,6 +5,7 @@ import com.maxkucher.springinactiontutorial.domains.RegistrationForm;
 import com.maxkucher.springinactiontutorial.domains.User;
 import com.maxkucher.springinactiontutorial.services.UsersService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,6 +15,7 @@ import reactor.core.publisher.Mono;
 @RestController
 @RequestMapping("/register")
 @RequiredArgsConstructor
+@CrossOrigin(origins="*")
 public class RegistrationController {
     private final UsersService usersService;
 
