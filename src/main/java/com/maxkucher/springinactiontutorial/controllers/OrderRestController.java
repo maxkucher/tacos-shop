@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Mono;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -19,18 +20,18 @@ public class OrderRestController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Order createOrder(@RequestBody Order order) {
+    public Mono<Order> createOrder(@RequestBody Mono<Order> order) {
         return ordersRepository
-                .save(order);
+                .saveAll(order).next();
     }
 
     @PutMapping
-    public Order putOrder(@RequestBody Order order) {
+    public Mono<Order> putOrder(@RequestBody Order order) {
         return ordersRepository.save(order);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteOrder(@PathVariable Long id, HttpServletResponse response) {
+    public void deleteOrder(@PathVariable String id, HttpServletResponse response) {
         try {
             ordersRepository.deleteById(id);
             response.setStatus(HttpStatus.NO_CONTENT.value());

@@ -30,28 +30,23 @@ public class DesignTacoRestController {
     private final TacoService tacoService;
 
     @Bean
-    public RouterFunction<?> routerFunction()
-    {
-        return route(GET("/design/taco"),this::recents)
-                .andRoute(POST("/design"),this::postTaco);
+    public RouterFunction<?> routerFunction() {
+        return route(GET("/design/taco"), this::recents)
+                .andRoute(POST("/design"), this::postTaco);
     }
 
 
-
-    public Mono<ServerResponse> recents(ServerRequest request)
-    {
+    public Mono<ServerResponse> recents(ServerRequest request) {
         return ServerResponse.ok()
-                .body(tacoService.findAll().take(12),Taco.class);
+                .body(tacoService.findAll().take(12), Taco.class);
     }
 
     public Mono<ServerResponse> postTaco(ServerRequest request) {
         Mono<Taco> taco = request.bodyToMono(Taco.class);
         Mono<Taco> savedTaco = tacoService.saveTaco(taco);
-        return ServerResponse.created(URI.create(
-                "http://localhost:8080/design/taco/"+savedTaco.getId()))
-                .body(savedTaco,Taco.class);
+        return ServerResponse.ok()
+                .body(savedTaco, Taco.class);
     }
-
 
 
 }

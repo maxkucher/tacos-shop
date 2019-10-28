@@ -6,9 +6,10 @@ import com.maxkucher.springinactiontutorial.repositories.IngredientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
+import reactor.core.publisher.Mono;
 
 @Component
-public class IngredientByIdConverter implements Converter<String, Ingredient> {
+public class IngredientByIdConverter implements Converter<String, Mono<Ingredient>> {
     private final IngredientRepository repository;
 
 
@@ -19,7 +20,7 @@ public class IngredientByIdConverter implements Converter<String, Ingredient> {
 
 
     @Override
-    public Ingredient convert(String s) {
-        return repository.findById(s).get();
+    public Mono<Ingredient> convert(String s) {
+        return repository.findById(s);
     }
 }

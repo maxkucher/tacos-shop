@@ -1,35 +1,28 @@
 package com.maxkucher.springinactiontutorial.domains;
 
 
-import com.datastax.driver.core.utils.UUIDs;
 import lombok.Data;
-import org.springframework.data.cassandra.core.cql.Ordering;
-import org.springframework.data.cassandra.core.cql.PrimaryKeyType;
-import org.springframework.data.cassandra.core.mapping.Column;
-import org.springframework.data.cassandra.core.mapping.PrimaryKeyColumn;
-import org.springframework.data.cassandra.core.mapping.Table;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 @Data
-@Table("tacos")
+@Document
 public class Taco {
 
-    @PrimaryKeyColumn(type = PrimaryKeyType.PARTITIONED)
-    private UUID  id= UUIDs.timeBased();
-    @PrimaryKeyColumn(type = PrimaryKeyType.CLUSTERED, ordering = Ordering.DESCENDING)
+    @Id
+    private String id;
     private Date createdAt = new Date();
     @NotNull
     @Size(min = 5, message = "Must be at least 5 chars long")
     private String name;
 
-    @Column("ingredients")
     @Size(min = 1, message = "You must choose at least 1 ingredient")
-    private List<IngredientUDT> ingredients = new ArrayList<>();
+    private List<Ingredient> ingredients = new ArrayList<>();
 
 }

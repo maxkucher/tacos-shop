@@ -2,29 +2,25 @@ package com.maxkucher.springinactiontutorial.controllers;
 
 
 import com.maxkucher.springinactiontutorial.domains.RegistrationForm;
-import com.maxkucher.springinactiontutorial.repositories.UserRepository;
+import com.maxkucher.springinactiontutorial.domains.User;
+import com.maxkucher.springinactiontutorial.services.UsersService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.reactive.function.server.ServerResponse;
+import reactor.core.publisher.Mono;
 
-@Controller
+@RestController
 @RequestMapping("/register")
 @RequiredArgsConstructor
 public class RegistrationController {
-    private final UserRepository userRepository;
-    private final PasswordEncoder encoder;
+    private final UsersService usersService;
 
-    @GetMapping
-    public String registerForm() {
-        return "registration";
-    }
 
     @PostMapping
-    public String processRegistration(RegistrationForm form) {
-        userRepository.save(form.toUser(encoder));
-        return "redirect:/login";
+    public Mono<ServerResponse> processRegistration(Mono<RegistrationForm> form) {
+        Mono<User> userMono = usersService.saveUser(form);
+        return ServerResponse.ok().build();
     }
 }
